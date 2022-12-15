@@ -157,11 +157,14 @@ class SfmcFlutterPlugin : FlutterPlugin, MethodCallHandler {
     * Contact Key Management
     * */
     fun setContactKey(contactKey: String): Boolean {
-        MarketingCloudSdk.requestSdk { sdk ->
-            val registrationManager = sdk.registrationManager
-            registrationManager.edit().run {
-                setContactKey(contactKey)
-                commit()
+         SFMCSdk.requestSdk { sdk ->
+            // Set Contact Key
+            sdk.identity.setProfileId(contactKey)
+
+            // Get Contact Key
+            sdk.mp {
+                val contactKey = it.moduleIdentity.profileId
+                Log.d("contactKeycontactKey", contactKey.toString())
             }
         }
         return true
@@ -199,23 +202,36 @@ class SfmcFlutterPlugin : FlutterPlugin, MethodCallHandler {
      * TAG Management
      */
     fun setTag(tag: String): Boolean {
-        MarketingCloudSdk.requestSdk { sdk ->
+        SFMCSdk.requestSdk { sdk ->
+         
+            sdk.mp {
+                it.registrationManager.edit().run {
+                    // Different ways to set tags
+                    addTags(tag)
+                    // Commit changes
+                    commit()
+                }
 
-            sdk.registrationManager.edit().run {
-                addTags(tag)
-                commit()
+                // Get Tags
+                val tags = it.registrationManager.tags
             }
         }
         return true
     }
 
     fun removeTag(tag: String): Boolean {
-        MarketingCloudSdk.requestSdk { sdk ->
-            sdk.registrationManager.edit().run {
-                removeTags(tag)
-                commit()
+         SFMCSdk.requestSdk { sdk ->
+         
+            sdk.mp {
+                it.registrationManager.edit().run {
+                    // Different ways to set tags
+                    removeTags(tag)
+                    // Commit changes
+                    commit()
+                }
             }
         }
+      
         return true
     }
 
