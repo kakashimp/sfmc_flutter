@@ -14,6 +14,7 @@ import com.salesforce.marketingcloud.notifications.NotificationCustomizationOpti
 import com.salesforce.marketingcloud.sfmcsdk.SFMCSdk
 import com.salesforce.marketingcloud.sfmcsdk.SFMCSdkModuleConfig
 import com.salesforce.marketingcloud.sfmcsdk.components.events.EventManager.Companion.customEvent
+import android.util.Log
 
 /** SfmcFlutterPlugin */
 class SfmcFlutterPlugin : FlutterPlugin, MethodCallHandler {
